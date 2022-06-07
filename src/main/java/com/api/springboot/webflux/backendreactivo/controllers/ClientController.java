@@ -24,7 +24,7 @@ import java.util.Map;
 public class ClientController {
 
     @Autowired
-    private ClientService service;
+    ClientService service;
 
     @PostMapping("/registro")
     public Mono<ResponseEntity<Client>> registrarCliente(Client client) {
