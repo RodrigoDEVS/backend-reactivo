@@ -13,6 +13,25 @@ public class User {
 
     private String password;
 
+    private String token;
+
+    public User() {
+    }
+
+    public User(String usuario, String password, String token) {
+        this.usuario = usuario;
+        this.password = password;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getId() {
         return id;
     }

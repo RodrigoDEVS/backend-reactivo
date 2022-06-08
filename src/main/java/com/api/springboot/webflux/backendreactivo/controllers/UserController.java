@@ -3,6 +3,7 @@ package com.api.springboot.webflux.backendreactivo.controllers;
 import com.api.springboot.webflux.backendreactivo.models.Client;
 import com.api.springboot.webflux.backendreactivo.models.User;
 import com.api.springboot.webflux.backendreactivo.services.UserService;
+import jdk.javadoc.doclet.Reporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Map<String, Object>>> guardarCliente(@RequestBody Mono<User> monoClient){
+    public Mono<ResponseEntity<Map<String, Object>>> guardarUsuario(@RequestBody Mono<User> monoClient){
         Map<String, Object> resp = new HashMap<>();
 
         return monoClient.flatMap(user -> {
@@ -96,5 +97,26 @@ public class UserController {
         return service.findById(id).flatMap(element ->{
             return service.delete(element).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
         }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+    }
+/*
+    @PostMapping("/login")
+    public Mono<ResponseEntity<User>> login(@RequestBody User user){
+
+        user.setToken("7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ");
+        return service.save(user)
+                .map(element -> ResponseEntity.created(URI.create("/users".concat(element.getId())))
+
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(element));
+    }*/
+
+    @PostMapping("/login")
+    public Mono<ResponseEntity<User>> login(@RequestBody User user){
+
+        String token = "7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ ";
+        return service.findByUsuario(user.getUsuario())
+                .filter(userDetails -> (user.getPassword()).equals(userDetails.getPassword()))
+                .map(userDetails -> ResponseEntity.ok(new User(userDetails.getUsuario(), userDetails.getPassword(), token)))
+                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
     }
 }

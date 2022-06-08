@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService {
     public Mono<Void> delete(User user) {
         return userRepo.delete(user);
     }
+
+    @Override
+    public Mono<User> findByUsuario(String usuario) {
+        return userRepo.findByUsuario(usuario);
+    }
+
 }

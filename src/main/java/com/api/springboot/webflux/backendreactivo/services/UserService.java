@@ -13,4 +13,6 @@ public interface UserService {
     public Mono<User> save(User user);
 
     public Mono<Void> delete(User user);
+
+    public Mono<User> findByUsuario(String usuario);
 }
