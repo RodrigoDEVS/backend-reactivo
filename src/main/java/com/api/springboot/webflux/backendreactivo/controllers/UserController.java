@@ -116,7 +116,7 @@ public class UserController {
         String token = "7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ ";
         return service.findByUsuario(user.getUsuario())
                 .filter(userDetails -> (user.getPassword()).equals(userDetails.getPassword()))
-                .map(userDetails -> ResponseEntity.ok(new User(userDetails.getUsuario(), userDetails.getPassword(), token)))
+                .map(userDetails -> ResponseEntity.ok(new User(userDetails.getId(), userDetails.getUsuario(), userDetails.getPassword(), token)))
                 .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
     }
 }

@@ -24,6 +24,13 @@ public class User {
         this.token = token;
     }
 
+    public User(String id, String usuario, String password, String token) {
+        this.id = id;
+        this.usuario = usuario;
+        this.password = password;
+        this.token = token;
+    }
+
     public String getToken() {
         return token;
     }
